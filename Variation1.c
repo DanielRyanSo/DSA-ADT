@@ -33,12 +33,34 @@ int locate(List L, int data){
     return -1;
 }
 
-List sort(){
-
+List sort(List L){
+    int temp;
+    for(int i = 0 ; i < L.count; i++){
+        for(int j = 0 ; j < L.count - 1 - i ; j++){
+        if(L.elem[j] > L.elem[j+1]){
+            temp = L.elem[j+1];
+            L.elem[j+1] = L.elem[j];
+            L.elem[j] = temp;
+        }
+        }
+    }
+    return L;
 }
 
-List insertSorted(){
 
+List insertSorted(List L, int data){
+    int pos=0;
+    for(int i = 0 ; i < L.count ; i++){
+        if(L.elem[i] < data){
+            pos = i+1;
+        }
+    }
+    for(int i = L.count; i <= pos; i--){
+        L.elem[i+1] = L.elem[i];
+        L.elem[i] = L.elem[i-1];
+    }
+    L.elem[pos] = data;
+    L.count++;
 }
 
 void display(List L){
@@ -62,12 +84,17 @@ int main(){
     printf("\nbefore: ");
     display(L);
     L = insertPos(L, 4, 2);
+    L = insertPos(L, 1, 3);
+
     printf("\nAfter: ");
     display(L);
     int position = locate(L, 3);
     printf("\nposition: %d", position);
-    
     L = sort(L);
-    L = insertSorted(L);
+    printf("\nSorted: ");
+    display(L);
+    L = insertSorted(L, 9);
+    printf("\nInserted Sort:");
+    display(L);
 
 }
