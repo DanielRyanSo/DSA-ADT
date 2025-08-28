@@ -12,21 +12,19 @@ List initialize(List change){
     return change;
 }
 
-List insertPos(List insert, int data, int  position){
-    int temp;
-    for(int i = insert.count-1 ; i >= position ; i--){
-        temp = insert.elem[i];
-        insert.elem[i+1]=temp;
+List insertPos(List insert, int data, int position){
+    for(int i = insert.count - 1; i >= position; i--){
+        insert.elem[i + 1] = insert.elem[i];
     }
-    insert.elem[position]=data;
+    insert.elem[position] = data;
     insert.count++;
 
     return insert;
 }
+
 int locate(List L, int data){
-    int found;
-    for(int i = 0 ; i < L.count ; i++){
-        if(L.elem[i]==data){
+    for(int i = 0; i < L.count; i++){
+        if(L.elem[i] == data){
             return i;
         }
     }
@@ -35,66 +33,73 @@ int locate(List L, int data){
 
 List sort(List L){
     int temp;
-    for(int i = 0 ; i < L.count; i++){
-        for(int j = 0 ; j < L.count - 1 - i ; j++){
-        if(L.elem[j] > L.elem[j+1]){
-            temp = L.elem[j+1];
-            L.elem[j+1] = L.elem[j];
-            L.elem[j] = temp;
-        }
+    for(int i = 0; i < L.count; i++){
+        for(int j = 0; j < L.count - 1 - i; j++){
+            if(L.elem[j] > L.elem[j + 1]){
+                temp = L.elem[j + 1];
+                L.elem[j + 1] = L.elem[j];
+                L.elem[j] = temp;
+            }
         }
     }
     return L;
 }
 
-
 List insertSorted(List L, int data){
-    int pos=0;
-    for(int i = 0 ; i < L.count ; i++){
+    int pos = 0;
+    for(int i = 0; i < L.count; i++){
         if(L.elem[i] < data){
-            pos = i+1;
+            pos = i + 1;
+        } else {
+            break;
         }
     }
-    for(int i = L.count; i <= pos; i--){
-        L.elem[i+1] = L.elem[i];
-        L.elem[i] = L.elem[i-1];
+    for(int i = L.count - 1; i >= pos; i--){
+        L.elem[i + 1] = L.elem[i];
     }
     L.elem[pos] = data;
     L.count++;
+    return L;
 }
 
 void display(List L){
-    for(int i = 0 ; i < L.count; i++){
-        printf("%d", L.elem[i]);
+    for(int i = 0; i < L.count; i++){
+        printf("%d ", L.elem[i]);
     }
+    printf("\n");
 }
-
 
 int main(){
     List L; 
     L = initialize(L);
-    printf("%d", L.count);
-    printf("\n");
+    printf("Initial count: %d\n", L.count);
 
     L.elem[0] = 1;
     L.elem[1] = 3;
     L.elem[2] = 2;
     L.elem[3] = 5;
     L.count = 4;
-    printf("\nbefore: ");
+
+    printf("Before: ");
     display(L);
+
     L = insertPos(L, 4, 2);
     L = insertPos(L, 1, 3);
 
-    printf("\nAfter: ");
-    display(L);
-    int position = locate(L, 3);
-    printf("\nposition: %d", position);
-    L = sort(L);
-    printf("\nSorted: ");
-    display(L);
-    L = insertSorted(L, 9);
-    printf("\nInserted Sort:");
+    printf("After insertPos: ");
     display(L);
 
+    int position = locate(L, 3);
+    printf("Position of 3: %d\n", position);
+
+    L = sort(L);
+    printf("Sorted: ");
+    display(L);
+
+    L = insertSorted(L, 9);
+    printf("After insertSorted(9): ");
+    display(L);
+
+    return 0;
 }
+
