@@ -45,6 +45,17 @@ List sort(List L){
     return L;
 }
 
+List deletePos(List L, int position){
+    for(int i = L.count ; i >= position ;i--){
+     if(i-1 != position){
+         L.elem[i] = L.elem[i+1]; 
+     }
+     }
+     L.count--;
+     return L;
+    }
+
+
 List insertSorted(List L, int data){
     int pos = 0;
     for(int i = 0; i < L.count; i++){
@@ -85,8 +96,13 @@ int main(){
 
     L = insertPos(L, 4, 2);
     L = insertPos(L, 1, 3);
-
+   
     printf("After insertPos: ");
+    display(L);
+    
+    L = deletePos(L, 4);
+    
+    printf("After deletePos: ");
     display(L);
 
     int position = locate(L, 3);
@@ -97,9 +113,8 @@ int main(){
     display(L);
 
     L = insertSorted(L, 9);
-    printf("After insertSorted(9): ");
+    printf("After insertSorted: ");
     display(L);
 
     return 0;
 }
-
