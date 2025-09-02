@@ -75,7 +75,8 @@ void display(EPtr L){
 }
 
 int main(){
-    EPtr L; 
+    Etype list;
+    EPtr L = &list; 
     initialize(L);
     printf("Initial count: %d\n", L->count);
 
