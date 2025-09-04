@@ -20,14 +20,19 @@ void insertPos(EPtr insert, int data, int position){
 
 }
 
-void deletePos(EPtr L, int position){
-    for(int i = L->count ; i >= position ;i--){
-     if(i-1 != position){
-         L->elem[i] = L->elem[i+1]; 
-     }
-     }
-     L->count--;
+void deletePos(EPtr L, int position) {
+    if (position < 0 || position >= L->count) {
+        printf("Invalid position\n");
+        return;
     }
+
+    for (int i = position; i < L->count - 1; i++) {
+        L->elem[i] = L->elem[i + 1];
+    }
+
+    L->count--;
+}
+
 
 int locate(EPtr L, int data){
     for(int i = 0; i < L->count; i++){
@@ -68,15 +73,32 @@ void insertSorted(EPtr L, int data){
 }
 
 void display(EPtr L){
+    if(L == NULL){
+        printf("Freed or NULL pointer\n");
+        return;
+    }
     for(int i = 0; i < L->count; i++){
         printf("%d ", L->elem[i]);
     }
     printf("\n");
 }
 
+
+void makeNULL(EPtr L){
+    if (L != NULL) {
+        free(L);
+        printf("Memory freed.\n");
+    }
+}
+
+
 int main(){
-    Etype list;
-    EPtr L = &list; 
+    EPtr L = (EPtr)malloc(sizeof(Etype));
+    if (L == NULL) {
+        printf("Memory allocation failed\n");
+        return 1;
+    }
+
     initialize(L);
     printf("Initial count: %d\n", L->count);
 
@@ -91,12 +113,12 @@ int main(){
 
     insertPos(L, 4, 2);
     insertPos(L, 1, 3);
-   
+
     printf("After insertPos: ");
     display(L);
-    
+
     deletePos(L, 4);
-    
+
     printf("After deletePos: ");
     display(L);
 
@@ -110,6 +132,8 @@ int main(){
     insertSorted(L, 9);
     printf("After insertSorted: ");
     display(L);
+
+    makeNULL(L);
 
     return 0;
 }
