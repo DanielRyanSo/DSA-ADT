@@ -36,7 +36,13 @@ int main(){
     insertPos(L, 90, 1);
     deleteStart(L);
     deleteLast(L);
+    deletePos(L, 2);
     display(L);
+    int receive = retrieve(L, 1);
+    printf("\nData retrieved is: %d", receive);
+    int loc = locate(L, 6);
+    printf("\nData Located in: %d\n", loc);
+
 }
 
 void display(List* list){
@@ -47,6 +53,59 @@ void display(List* list){
     }
     printf("\ncount: %d", list->count);
 }
+
+int locate(List *list, int data){
+    if(list -> head == NULL){
+        return -1;
+    }
+    Node *current = list->head;
+    int index =0;
+    int found = 0 ;
+    while(current != NULL){
+        if(data == current->data){
+            found = 1;
+            return index;
+        }
+        current = current->next;
+        index++;
+    }
+    if(found = 1){
+        return -1;
+    }
+}
+
+int retrieve(List *list, int index){
+    if(index >= list->count||index < 0){
+        printf("Invalid index: %d\n", index);
+        return -1;
+    }else{
+        Node *current = list->head;
+        for(int i = 0; i < index ; i++){
+            current=current-> next;
+        }
+        return current->data;
+    }
+}
+
+void deletePos(List *list, int index) {
+    if (index < 0 || index >= list->count){
+        printf("Invalid index: %d\n", index);
+        return;
+    }
+    if (index == 0) {
+        deleteStart(list); 
+        return;
+    }
+    Node *current = list->head;
+    for (int i = 0; i < index - 1; i++) {
+        current = current->next;
+    }
+    Node *temp = current->next;
+    current->next = temp->next;
+    free(temp);
+    list->count--;
+}
+
 
 void deleteLast(List *list){
     if(list->count == 1){
@@ -97,6 +156,7 @@ void insertLast(List *list, int data){
     newnode->next = NULL;
     if(list->head == NULL){
         list->head = newnode;
+        list->count++;
     }else{
     Node *current = list->head;
     while((current->next)!=NULL){
