@@ -1,0 +1,44 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+#define MAX 4
+
+typedef struct{
+    int elem;
+    int next;
+} Cell, HeapSpace[MAX];
+
+typedef struct{
+    HeapSpace H;
+    int avail;
+} VHeap;
+
+void initialize(VHeap *V){
+    V->avail=0;
+    for(int i = 0; i < MAX; i++){
+        V->H[i].next = i+1;
+    }
+    V->H[MAX-1].next=-1;
+}
+
+int allocSpace(VHeap *V){
+    int index = V->avail;
+    if(index != -1){
+        V->avail = V->H[index].next;
+    }
+    return index;
+}
+
+void deallocSpace(VHeap *V, int index){
+    V->H[ ]
+}
+
+typedef int List;
+
+int main() {
+    List L;
+    VHeap V;
+    initialize(&V);
+    L = -1;
+    
+    return 0;
+}
