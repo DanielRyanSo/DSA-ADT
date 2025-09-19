@@ -13,12 +13,11 @@ List initialize(List change){
 }
 
 List insertPos(List insert, int data, int position){
-    for(int i = insert.count - 1; i >= position; i--){
-        insert.elem[i + 1] = insert.elem[i];
+    for (int i = insert.count; i > position; i--) {
+    insert.elem[i] = insert.elem[i - 1]; 
     }
-    insert.elem[position] = data;
-    insert.count++;
-
+    insert.elem[position] = data;  
+    insert.count++;  
     return insert;
 }
 
@@ -45,15 +44,14 @@ List sort(List L){
     return L;
 }
 
-List deletePos(List L, int position){
-    for(int i = L.count ; i >= position ;i--){
-     if(i-1 != position){
-         L.elem[i] = L.elem[i+1]; 
-     }
-     }
-     L.count--;
-     return L;
+List deletePos(List L, int position) {
+    for (int i = position; i < L.count - 1; i++) {
+        L.elem[i] = L.elem[i + 1];
     }
+    L.count--;
+    return L;
+}
+
 
 
 List insertSorted(List L, int data){
