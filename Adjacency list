@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 9
+#define VISITED 1
+#define UNVISITED 0
+
+typedef struct node {
+    int elem;
+    struct node *link;
+} Node, *ptr;
+
+typedef ptr graph[MAX];
+
+void initGraph(graph G) {
+    for (int i = 0; i < MAX; i++)
+        G[i] = NULL;
+}
+
+void CNode(graph G, int v, int w) {
+    ptr newnode = (ptr)malloc(sizeof(Node));
+    newnode->elem = w;
+    newnode->link = G[v];
+    G[v] = newnode;
+}
+
+void dfs(graph G, int v, int mark[]) {
+    mark[v] = VISITED;
+    printf("%d ", v);
+
+    for (ptr p = G[v]; p != NULL; p = p->link) {
+        int w = p->elem;
+        if (mark[w] == UNVISITED) {
+            dfs(G, w, mark);
+        }
+    }
+}
+
+int main() {
+    graph G;
+    int mark[MAX];
+
+    initGraph(G);
+
+    for (int i = 0; i < MAX; i++){
+        mark[i] = UNVISITED;
+}
+    CNode(G, 0, 1);
+    CNode(G, 0, 2);
+    CNode(G, 1, 3);
+    CNode(G, 1, 4);
+    CNode(G, 2, 5);
+
+    printf("DFS starting at vertex 0: ");
+    dfs(G, 0, mark);
+    printf("\n");
+
+    return 0;
+}
